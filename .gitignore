@@ -42,5 +42,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Log Files
-log-EC.txt
