@@ -1,0 +1,46 @@
+<h2>Users</h2>
+<button class="btn btn-block mb-3" [disabled]="!enableAdd" [ngClass]="currentClasses">
+  Add New</button>
+<ul class="list-unstyled" *ngIf="users?.length>0 && loaded === true; else elseTemplate">
+  <!-- <li class="card card-body mb-2" *ngFor="let user of users" [ngClass]="{'bg-dark': user.isActive}" [ngStyle]="{'border-color': user.isActive ? 'green' : ''}"> -->
+  <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-dark]="!user.isActive" [style.border-color]="user.isActive ? 'green' : ''">
+
+    <div class="row">
+      <div class="col-sm-4">
+        <img *ngIf="user.image; else elseTemplate" class="img-fluid" [src]="user.image">
+        <ng-template #elseTemplate>
+          <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
+        </ng-template>
+      </div>
+
+      <div class="col-sm-8">
+        <h3 [ngStyle]="currentStyle" > {{user.firstName | lowercase}} {{user.lastName | uppercase}}</h3>
+        <ul class="list-group" *ngIf="showExtended && user.age && user.address">
+          <li class="list-group-item">Age: {{user.age}}</li>
+          <li class="list-group-item">Address: {{user.address.street}}, {{user.address.city}}</li>
+          <li class="list-group-item">
+            Balance: {{user.balance | currency:"EUR"}}
+          <li class="list-group-item">
+            Joined: {{user.registered | date: "dd-MMM-yyyy"}}
+          <li class="list-group-item">
+            Number: {{5 | number: "2.4"}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<ng-template #elseTemplate>
+
+  <ul *ngIf="loaded === false; else elseTemplate">
+    <img src="./assets/loading.gif" height="150px">
+  </ul>
+
+  <ng-template #elseTemplate>
+    <ul>
+      No Users
+    </ul>
+  </ng-template>
+
+</ng-template>
