@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
 import { User } from '../../models/User';
-
 
 @Component({
   selector: 'app-users',
@@ -10,20 +8,27 @@ import { User } from '../../models/User';
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
+  user: User = {
+    firstName: '',
+    lastName: '',
+    age: null,
+    address: {
+      street: '',
+      city: '',
+      county: ''
+    }
+  };
   showExtended: boolean = true;
   loaded: boolean = false;
-  enableAdd: boolean = true;
-  currentClasses = {};
-  currentStyle = {};
+  enableAdd: boolean = false;
+  showUserForm: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
     setTimeout(() => {
       this.loadUsers();
-    }, 500);
-
-
+    }, 50);
   }
 
   loadUsers() {
@@ -37,10 +42,9 @@ export class UsersComponent implements OnInit {
           city: 'Cobh',
           county: 'Cork'
         },
-        image:'http://lorempixel.com/600/600/people/3',
         isActive: true,
-        balance: 500,
-        registered: new Date('01/02/2018 08:30:00')
+        registered: new Date('01/02/2018 08:30:00'),
+        hide: true
       },
       {
         firstName: 'Freda',
@@ -51,10 +55,9 @@ export class UsersComponent implements OnInit {
           city: 'Harare',
           county: 'Zim'
         },
-        image:'../../assets/fm.jpg',
         isActive: true,
-        balance: 50,
-        registered: new Date('03/11/2017 09:35:00')
+        registered: new Date('03/11/2017 09:35:00'),
+        hide: true
       },
       {
         firstName: 'Mona',
@@ -65,49 +68,33 @@ export class UsersComponent implements OnInit {
           city: 'Dager',
           county: 'Menmd'
         },
-        image:'../../assets/mc.jpg',
-        isActive: false
+        isActive: false,
+        hide: true
       }
     ];
 
     this.loaded = true;
-
-    this.addUser();
-
-    this.setCurrentClasses();
-    this.setCurrentStyle();
   }
 
   addUser() {
-    this.users.push(
-      {
-        firstName: 'Papa',
-        lastName: 'Claire',
-        // age: 72,
-        // address: {
-        //   street: '99 South',
-        //   city: 'Dager',
-        //   county: 'Menmd'
-        // }
+    this.users.unshift(this.user);
+    this.user.isActive = true;
+    this.user.registered = new Date();
+    this.user = {
+      firstName: '',
+      lastName: '',
+      age: null,
+      address: {
+        street: '',
+        city: '',
+        county: ''
       }
-    );
+    };
   }
 
-  setCurrentClasses(){
-    this.currentClasses = {
-      'btn-success': this.enableAdd,
-      'bigText': this.enableAdd
+    onSubmit(e) {
+      console.log(123);
+      e.preventDefault();
     }
+
   }
-
-  setCurrentStyle(){
-    this.currentStyle = {
-      'padding': this.showExtended ? '' : '20px',
-      'font-size': this.showExtended ? '' : '3em'
-
-    }
-  }
-
-
-
-}

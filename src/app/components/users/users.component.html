@@ -1,46 +1,54 @@
 <h2>Users</h2>
-<button class="btn btn-block mb-3" [disabled]="!enableAdd" [ngClass]="currentClasses">
-  Add New</button>
 <ul class="list-unstyled" *ngIf="users?.length>0 && loaded === true; else elseTemplate">
-  <!-- <li class="card card-body mb-2" *ngFor="let user of users" [ngClass]="{'bg-dark': user.isActive}" [ngStyle]="{'border-color': user.isActive ? 'green' : ''}"> -->
-  <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-dark]="!user.isActive" [style.border-color]="user.isActive ? 'green' : ''">
-
-    <div class="row">
-      <div class="col-sm-4">
-        <img *ngIf="user.image; else elseTemplate" class="img-fluid" [src]="user.image">
-        <ng-template #elseTemplate>
-          <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
-        </ng-template>
-      </div>
-
-      <div class="col-sm-8">
-        <h3 [ngStyle]="currentStyle" > {{user.firstName | lowercase}} {{user.lastName | uppercase}}</h3>
-        <ul class="list-group" *ngIf="showExtended && user.age && user.address">
-          <li class="list-group-item">Age: {{user.age}}</li>
-          <li class="list-group-item">Address: {{user.address.street}}, {{user.address.city}}</li>
-          <li class="list-group-item">
-            Balance: {{user.balance | currency:"EUR"}}
-          <li class="list-group-item">
-            Joined: {{user.registered | date: "dd-MMM-yyyy"}}
-          <li class="list-group-item">
-            Number: {{5 | number: "2.4"}}
-          </li>
-        </ul>
-      </div>
-    </div>
+  <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-dark]="!user.isActive">
+    <h3>
+      {{user.firstName}} {{user.lastName}}
+      <small *ngIf="user.age && user.address">
+        <button (click)="user.hide = !user.hide" class="btn btn-dark btn-sm">
+          <i [ngClass]="user.hide ? 'fa fa-plus':'fa fa-minus'"></i>
+        </button>
+      </small>
+    </h3>
+    <ul class="list-group" *ngIf="!user.hide && user.age && user.address">
+      <li class="list-group-item">Age: {{user.age}}</li>
+      <li class="list-group-item">
+        Address: {{user.address.street}}, {{user.address.city}}
+      </li>
+      <li class="list-group-item">
+        Joined: {{user.registered | date: "dd-MMM-yyyy"}}
+      </li>
+    </ul>
   </li>
 </ul>
 
 <ng-template #elseTemplate>
-
   <ul *ngIf="loaded === false; else elseTemplate">
     <img src="./assets/loading.gif" height="150px">
   </ul>
 
   <ng-template #elseTemplate>
-    <ul>
-      No Users
-    </ul>
+    <ul> No Users </ul>
   </ng-template>
 
 </ng-template>
+
+
+<button class="btn btn-block btn-success" (click)="showUserForm = !showUserForm">
+  Show Add User Form</button>
+
+<div class="card card-body mb-3" *ngIf="showUserForm === true">
+  <h2>User Details</h2>
+  <form (submit)="onSubmit($event)">
+    <input type="text" class="form-control mt-2" placeholder="First Name" name="firstName" [(ngModel)]="user.firstName">
+    <input type="text" class="form-control mt-2" placeholder="Last Name" name="lastName" [(ngModel)]="user.lastName">
+    <input type="number" class="form-control mt-2" placeholder="Age" name="age" [(ngModel)]="user.age">
+    <input type="text" class="form-control mt-2" placeholder="Street" name="street" [(ngModel)]="user.address.street">
+    <input type="text" class="form-control mt-2" placeholder="City" name="city" [(ngModel)]="user.address.city">
+    <input type="text" class="form-control mt-2" placeholder="County" name="county" [(ngModel)]="user.address.county">
+    <button class="btn btn-block mt-2" [disabled]="!user.firstName || !user.lastName" (click)="addUser()">
+      Add New
+    </button>
+
+  </form>
+
+</div>
