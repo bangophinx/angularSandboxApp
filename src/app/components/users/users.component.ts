@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
+import { DataService } from "../../services/data.service";
 
 @Component({
   selector: 'app-users',
@@ -7,94 +8,38 @@ import { User } from '../../models/User';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: User[] = [];
   user: User = {
     firstName: '',
     lastName: '',
-    age: null,
-    address: {
-      street: '',
-      city: '',
-      county: ''
-    }
-  };
+    email: ''
+  }
+  users: User[];
+
   showExtended: boolean = true;
   loaded: boolean = false;
   enableAdd: boolean = false;
   showUserForm: boolean = false;
+  @ViewChild('userForm') form: any;
+  
 
-  constructor() { }
+  constructor(private dataService: DataService ) { }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.loadUsers();
-    }, 50);
-  }
-
-  loadUsers() {
-    this.users = [
-      {
-        firstName: 'Esco',
-        lastName: 'Phinx',
-        age: 32,
-        address: {
-          street: '20 Riverside',
-          city: 'Cobh',
-          county: 'Cork'
-        },
-        isActive: true,
-        registered: new Date('01/02/2018 08:30:00'),
-        hide: true
-      },
-      {
-        firstName: 'Freda',
-        lastName: 'Mills',
-        age: 33,
-        address: {
-          street: '21 Mombe',
-          city: 'Harare',
-          county: 'Zim'
-        },
-        isActive: true,
-        registered: new Date('03/11/2017 09:35:00'),
-        hide: true
-      },
-      {
-        firstName: 'Mona',
-        lastName: 'Claire',
-        age: 72,
-        address: {
-          street: '99 South',
-          city: 'Dager',
-          county: 'Menmd'
-        },
-        isActive: false,
-        hide: true
-      }
-    ];
-
+    this.users = this.dataService.getUsers();
     this.loaded = true;
   }
 
-  addUser() {
-    this.users.unshift(this.user);
-    this.user.isActive = true;
-    this.user.registered = new Date();
-    this.user = {
-      firstName: '',
-      lastName: '',
-      age: null,
-      address: {
-        street: '',
-        city: '',
-        county: ''
-      }
-    };
-  }
+  onSubmit({value, valid}:{value: User, valid: boolean}) {
+    if (!valid) {
+      console.log('Form is not valid');
+    } else {
+      value.isActive = true;
+      value.registered = new Date();
+      
+      this.dataService.addUser(value);
 
-    onSubmit(e) {
-      console.log(123);
-      e.preventDefault();
+      this.form.reset();
     }
-
   }
+
+}
