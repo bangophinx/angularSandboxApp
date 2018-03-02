@@ -11,7 +11,6 @@ import { UserService } from './services/user.service';
 import { PostsComponent } from './components/posts/posts.component';
 import { PostService } from './services/post.service';
 import { HttpClientModule } from "@angular/common/http";
-import { PostFormComponent } from './components/post-form/post-form.component';
 
 
 
@@ -21,8 +20,7 @@ import { PostFormComponent } from './components/post-form/post-form.component';
     UserComponent,
     UsersComponent,
     NavbarComponent,
-    PostsComponent,
-    PostFormComponent
+    PostsComponent
   ],
   imports: [
     BrowserModule,
