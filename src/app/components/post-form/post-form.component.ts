@@ -26,14 +26,18 @@ export class PostFormComponent implements OnInit {
     else {
       this.postService.savePost({ title, body } as Post).subscribe(post => {
         this.newPost.emit(post);
-      });
+        console.log(post.id);
+      }
+      );
     }
   }
 
   updatePost() {
     this.postService.onUpdatePost(this.currentPost).subscribe(post => {
       this.updatedPost.emit(post);
-    });
+    }
+      
+    );
   }
 
 }

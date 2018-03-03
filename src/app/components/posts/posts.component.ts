@@ -27,11 +27,11 @@ export class PostsComponent implements OnInit {
 
   onNewPost(post: Post) {
     this.posts.unshift(post);
-    this.currentPost = {
-      id: 0,
-      title: '',
-      body: ''
-    };
+    // this.currentPost = {
+    //   id: 0,
+    //   title: '',
+    //   body: ''
+    // };
   }
 
   editPost(post: Post) {
@@ -52,6 +52,19 @@ export class PostsComponent implements OnInit {
         };
       }
     });
+  }
+
+  removePost(post: Post) {
+    if (confirm('Are you Sure?')) {
+      this.postService.removePost(post.id).subscribe(() => {
+        this.posts.forEach((cur, index) => {
+          if (cur.id === post.id) {
+            this.posts.splice(index, 1);
+          }
+        });
+      });
+    }
+
   }
 
 }
