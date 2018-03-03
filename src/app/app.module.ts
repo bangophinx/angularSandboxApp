@@ -12,15 +12,10 @@ import { PostsComponent } from './components/posts/posts.component';
 import { PostService } from './services/post.service';
 import { HttpClientModule } from "@angular/common/http";
 import { PostFormComponent } from './components/post-form/post-form.component';
-<<<<<<< HEAD
-import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './components/home/home.component';
-=======
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { PostComponent } from './components/post/post.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
->>>>>>> origin/master
 
 
 
@@ -32,13 +27,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     NavbarComponent,
     PostsComponent,
     PostFormComponent,
-<<<<<<< HEAD
-    HomeComponent
-=======
     HomeComponent,
     PostComponent,
     NotFoundComponent
->>>>>>> origin/master
   ],
   imports: [
     BrowserModule,

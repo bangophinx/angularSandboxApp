@@ -22,16 +22,6 @@ export class PostService {
     return this.http.post<Post>(this.postsUrl, post, httpOptions);
   }
 
-<<<<<<< HEAD
-  onPostUpdate(post: Post): Observable<Post>{
-    const url = `${this.postsUrl}/${post.id}`;
-    return this.http.put<Post>(url,post,httpOptions);
-  }
-
-  onDelete(post: Post) {
-    const deleteUrl = `${this.postsUrl}/${post.id}`;
-    return this.http.delete(deleteUrl, httpOptions);
-=======
   onUpdatePost(post: Post): Observable<Post>{
     const url = `${this.postsUrl}/${post.id}`;
     return this.http.put<Post>(url,post,httpOptions);
@@ -48,7 +38,6 @@ export class PostService {
   getPost(id: number): Observable<Post>{
     const url = `${this.postsUrl}/${id}`;
     return this.http.get<Post>(url);
->>>>>>> origin/master
   }
 
 }
