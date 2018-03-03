@@ -14,24 +14,43 @@ export class PostsComponent implements OnInit {
     title: '',
     body: ''
   };
-  isEdit=false;
+  isEdit = false;
 
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    this.postService.getPosts().subscribe(posts =>{
+    this.postService.getPosts().subscribe(posts => {
       this.posts = posts;
       console.log(posts);
     });
   }
 
-  addNewPost(post: Post){
+  addNewPost(post: Post) {
     this.posts.unshift(post);
+    this.currentPost = {
+      id: 0,
+      title: '',
+      body: ''
+    };
   }
 
-  editPost(post: Post){
+  editPost(post: Post) {
     this.currentPost = post;
     this.isEdit = true;
   }
 
+  updateView(post: Post) {
+    this.posts.forEach((cur, index) => {
+      if (cur.id === post.id) {
+        this.posts.splice(index, 1);
+      }
+    });
+    this.posts.unshift(post);
+    this.isEdit = false;
+    this.currentPost = {
+      id: 0,
+      title: '',
+      body: ''
+    };
+  }
 }

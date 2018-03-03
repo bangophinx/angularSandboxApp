@@ -9,6 +9,7 @@ import { PostService } from '../../services/post.service';
 })
 export class PostFormComponent implements OnInit {
   @Output() newPost: EventEmitter<Post> = new EventEmitter();
+  @Output() updatedPost: EventEmitter<Post> = new EventEmitter();
   @Input() currentPost: Post;
   @Input() isEdit: Post;
 
@@ -22,14 +23,16 @@ export class PostFormComponent implements OnInit {
       alert('Add title and body');
     } else {
       console.log(title, body);
-      this.postService.savePost({title, body} as Post).subscribe(post =>
+      this.postService.savePost({ title, body } as Post).subscribe(post =>
         this.newPost.emit(post)
-      );      
+      );
     }
   }
 
-  updatePost(){
-    
+  updatePost() {
+    this.postService.onPostUpdate(this.currentPost as Post).subscribe(post =>
+      this.updatedPost.emit(post)
+    );
   }
 
 
