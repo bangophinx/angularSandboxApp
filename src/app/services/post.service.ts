@@ -27,6 +27,9 @@ export class PostService {
     return this.http.put<Post>(url,post,httpOptions);
   }
 
-
+  onDelete(post: Post) {
+    const deleteUrl = `${this.postsUrl}/${post.id}`;
+    return this.http.delete(deleteUrl, httpOptions);
+  }
 
 }

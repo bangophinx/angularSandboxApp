@@ -53,4 +53,14 @@ export class PostsComponent implements OnInit {
       body: ''
     };
   }
+
+  deletePost(post: Post) {
+    this.postService.onDelete(post as Post).subscribe(item =>
+      this.posts.forEach((cur, index) => {
+        if (cur.id === post.id) {
+          this.posts.splice(index, 1);
+        }
+      })
+    );
+  }
 }

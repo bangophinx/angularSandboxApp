@@ -4,7 +4,7 @@
   <div class="card-body">
       <h3>{{post.id}}: {{post.title}}</h3>
       <p>{{post.body}}</p>
-      <button class="btn btn-danger">
+      <button class="btn btn-danger" (click)="deletePost(post)">
         <i class="fa fa-remove"></i>
       </button>
       <button class="btn btn-dark" (click)="editPost(post)" >

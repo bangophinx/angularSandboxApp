@@ -7,6 +7,7 @@ import { PostService } from '../../services/post.service';
   templateUrl: './post-form.component.html',
   styleUrls: ['./post-form.component.css']
 })
+
 export class PostFormComponent implements OnInit {
   @Output() newPost: EventEmitter<Post> = new EventEmitter();
   @Output() updatedPost: EventEmitter<Post> = new EventEmitter();
@@ -34,6 +35,5 @@ export class PostFormComponent implements OnInit {
       this.updatedPost.emit(post)
     );
   }
-
 
 }
