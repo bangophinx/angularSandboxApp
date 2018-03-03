@@ -14,11 +14,7 @@ export class PostsComponent implements OnInit {
     title: '',
     body: ''
   };
-<<<<<<< HEAD
-  isEdit = false;
-=======
   isEdit: boolean = false;
->>>>>>> origin/master
 
   constructor(private postService: PostService) { }
 
@@ -29,15 +25,6 @@ export class PostsComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-  addNewPost(post: Post) {
-    this.posts.unshift(post);
-    this.currentPost = {
-      id: 0,
-      title: '',
-      body: ''
-    };
-=======
   onNewPost(post: Post) {
     this.posts.unshift(post);
     // this.currentPost = {
@@ -45,7 +32,6 @@ export class PostsComponent implements OnInit {
     //   title: '',
     //   body: ''
     // };
->>>>>>> origin/master
   }
 
   editPost(post: Post) {
@@ -53,32 +39,6 @@ export class PostsComponent implements OnInit {
     this.isEdit = true;
   }
 
-<<<<<<< HEAD
-  updateView(post: Post) {
-    this.posts.forEach((cur, index) => {
-      if (cur.id === post.id) {
-        this.posts.splice(index, 1);
-      }
-    });
-    this.posts.unshift(post);
-    this.isEdit = false;
-    this.currentPost = {
-      id: 0,
-      title: '',
-      body: ''
-    };
-  }
-
-  deletePost(post: Post) {
-    this.postService.onDelete(post as Post).subscribe(item =>
-      this.posts.forEach((cur, index) => {
-        if (cur.id === post.id) {
-          this.posts.splice(index, 1);
-        }
-      })
-    );
-  }
-=======
   onPostUpdate(post: Post) {
     this.posts.forEach((cur, index) => {
       if (cur.id === post.id) {
@@ -107,5 +67,4 @@ export class PostsComponent implements OnInit {
 
   }
 
->>>>>>> origin/master
 }
