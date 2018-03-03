@@ -1,0 +1,71 @@
+[33mcommit a581a12da5bdf42572c0df1706248ee916deb881[m[33m ([m[1;36mHEAD -> [m[1;32mtraining[m[33m, [m[1;31morigin/training[m[33m)[m
+Author: Evans Chikarakara <bangophinx@gmail.com>
+Date:   Sat Mar 3 03:25:58 2018 +0000
+
+    added Http Client Delete Request
+
+[1mdiff --git a/src/app/components/post-form/post-form.component.ts b/src/app/components/post-form/post-form.component.ts[m
+[1mindex 30ae5c4..b797066 100644[m
+[1m--- a/src/app/components/post-form/post-form.component.ts[m
+[1m+++ b/src/app/components/post-form/post-form.component.ts[m
+[36m@@ -7,6 +7,7 @@[m [mimport { PostService } from '../../services/post.service';[m
+   templateUrl: './post-form.component.html',[m
+   styleUrls: ['./post-form.component.css'][m
+ })[m
+[32m+[m
+ export class PostFormComponent implements OnInit {[m
+   @Output() newPost: EventEmitter<Post> = new EventEmitter();[m
+   @Output() updatedPost: EventEmitter<Post> = new EventEmitter();[m
+[36m@@ -35,5 +36,4 @@[m [mexport class PostFormComponent implements OnInit {[m
+     );[m
+   }[m
+ [m
+[31m-[m
+ }[m
+[1mdiff --git a/src/app/components/posts/posts.component.html b/src/app/components/posts/posts.component.html[m
+[1mindex 52bc226..db35f53 100644[m
+[1m--- a/src/app/components/posts/posts.component.html[m
+[1m+++ b/src/app/components/posts/posts.component.html[m
+[36m@@ -4,7 +4,7 @@[m
+   <div class="card-body">[m
+       <h3>{{post.id}}: {{post.title}}</h3>[m
+       <p>{{post.body}}</p>[m
+[31m-      <button class="btn btn-danger">[m
+[32m+[m[32m      <button class="btn btn-danger" (click)="deletePost(post)">[m
+         <i class="fa fa-remove"></i>[m
+       </button>[m
+       <button class="btn btn-dark" (click)="editPost(post)" >[m
+[1mdiff --git a/src/app/components/posts/posts.component.ts b/src/app/components/posts/posts.component.ts[m
+[1mindex 0406967..ffb8fa5 100644[m
+[1m--- a/src/app/components/posts/posts.component.ts[m
+[1m+++ b/src/app/components/posts/posts.component.ts[m
+[36m@@ -53,4 +53,14 @@[m [mexport class PostsComponent implements OnInit {[m
+       body: ''[m
+     };[m
+   }[m
+[32m+[m
+[32m+[m[32m  deletePost(post: Post) {[m
+[32m+[m[32m    this.postService.onDelete(post as Post).subscribe(item =>[m
+[32m+[m[32m      this.posts.forEach((cur, index) => {[m
+[32m+[m[32m        if (cur.id === post.id) {[m
+[32m+[m[32m          this.posts.splice(index, 1);[m
+[32m+[m[32m        }[m
+[32m+[m[32m      })[m
+[32m+[m[32m    );[m
+[32m+[m[32m  }[m
+ }[m
+[1mdiff --git a/src/app/services/post.service.ts b/src/app/services/post.service.ts[m
+[1mindex 9e2306b..6083bc2 100644[m
+[1m--- a/src/app/services/post.service.ts[m
+[1m+++ b/src/app/services/post.service.ts[m
+[36m@@ -27,6 +27,9 @@[m [mexport class PostService {[m
+     return this.http.put<Post>(url,post,httpOptions);[m
+   }[m
+ [m
+[31m-[m
+[32m+[m[32m  onDelete(post: Post) {[m
+[32m+[m[32m    const deleteUrl = `${this.postsUrl}/${post.id}`;[m
+[32m+[m[32m    return this.http.delete(deleteUrl, httpOptions);[m
+[32m+[m[32m  }[m
+ [m
+ }[m
